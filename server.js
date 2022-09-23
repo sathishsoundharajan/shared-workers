@@ -1,7 +1,9 @@
 const Hapi = require('hapi');
 
+let server;
+
 async function bootstrap({ start = true, port = 4901 } = {}) {
-  const server = Hapi.Server({ port });
+  server = Hapi.Server({ port });
   await server.initialize();
 
   if (start) {

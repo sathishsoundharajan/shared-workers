@@ -1,6 +1,8 @@
 const bootstrap = require('../server');
 const { Symbols, MessageTypes } = require('./_const');
 
+const bootstrapPromise = bootstrap();
+
 module.exports = async ({ negotiateProtocol }) => {
   const protocol = negotiateProtocol(['experimental']).ready();
 
@@ -21,7 +23,7 @@ const sharedContexts = new Map();
 
 async function acquireServer(message) {
   if (!sharedContexts.has(Symbols.HttpServer)) {
-    const server = await bootstrap();
+    const server = await bootstrapPromise;
     sharedContexts.set(Symbols.HttpServer, server);
   }
   return message.reply({
